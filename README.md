@@ -2,11 +2,13 @@
 # Docker LAMP 環境
 
 LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境のこと
+今回は「MySQL, phpMyAdmin, Apache / PHP」3 つの Docker コンテナを用意する
 
 - MySQL
     - v5.7.31
     - Debian
 - phpMyAdmin
+    - Debian
 - Apache / PHP (同環境)
     - Apache
         - v2.4.38
@@ -16,7 +18,7 @@ LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境の�
 
 ## ブラウザ URL アクセス方法
 
-- PHP ファイルアクセス ※ 80 番ポート
+- PHP ファイルアクセス ※ 80 番ポート ( 80 番ポートは省略することもできる)
     - `index.html` にアクセス
         - http://localhost/index.html:80 または http://localhost/index.html または http://localhost または localhost
     - `index.php` にアクセス
@@ -27,6 +29,16 @@ LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境の�
     - http://localhost:8080/
 
 # Docker 仮想環境のログイン方法
+
+`docker-compose.yml` のあるディレクトリで以下コマンドを実行
+
+```sh
+# Docker コンテナ起動
+docker-compose up -d
+
+# Docker コンテナ終了
+docker-compose down
+```
 
 ## MySQL
 
