@@ -1,8 +1,41 @@
 
-# Docker LAMP 環境
+# 初期設定
 
-LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境のこと
-今回は「MySQL, phpMyAdmin, Apache / PHP」3 つの Docker コンテナを用意する
+## リモートリポジトリを変更する
+
+このリポジトリは `git clone git@github.com:Takuma-Ikeda/docker-LAMP.git` で使うことができますが、
+そのままだとリモートリポジトリ `origin` は上記 SSH を指したままになってしまいます。
+
+`git clone` したあと、自分の新しい GitHub リポジトリでプロジェクトを管理したい場合...
+
+1. 名前がややこしいのでプロジェクトのフォルダ名を `docker-LAMP` から変更する
+    - たとえば `lamp-lessons` などに変更する
+1. GitHub に新しいリポジトリを作成する
+    - たとえば `lamp-lessons` で新しいリポジトリを作成する
+1. 以下コマンドを実行する
+
+ ```sh
+# 現在のリモートリポジトリを確認する ※ git@github.com:Takuma-Ikeda/docker-LAMP.git のはず
+git remote -v
+
+# リモートリポジトリ origin に新しいリポジトリの SSH を設定する
+git remote set-url origin {new url}
+
+git add .
+git commit -m 'first commit'
+
+# -u オプション: 今後の git push は今の origin をデフォルトとする
+git push -u origin master
+```
+
+# このリポジトリについて
+
+## Docker LAMP 環境
+
+LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境のことです。
+Docker というアプリで簡単に LAMP 開発環境を構築しようと思います。
+
+今回は「MySQL」「phpMyAdmin」「Apache / PHP」という 3 つの Docker コンテナを作成します。
 
 - MySQL
     - v5.7.31
@@ -16,7 +49,19 @@ LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境の�
         - v7.4.10
     - Debian
 
-## ブラウザ URL アクセス方法
+## Docker コンテナ起動方法
+
+`docker-compose.yml` のあるディレクトリで以下コマンドを実行します。
+
+```sh
+# Docker コンテナ起動
+docker-compose up -d
+
+# Docker コンテナ終了
+docker-compose down
+```
+
+### ブラウザ URL アクセス方法
 
 - PHP ファイルアクセス ※ 80 番ポート ( 80 番ポートは省略することもできる)
     - `index.html` にアクセス
@@ -28,19 +73,9 @@ LAMP とは「Linux, Apache, MySQL, PHP」を組み合わせた開発環境の�
 - phpMyAdmin ※ 8080 番ポート
     - http://localhost:8080/
 
-# Docker 仮想環境のログイン方法
+## Docker コンテナにログインする方法
 
-`docker-compose.yml` のあるディレクトリで以下コマンドを実行
-
-```sh
-# Docker コンテナ起動
-docker-compose up -d
-
-# Docker コンテナ終了
-docker-compose down
-```
-
-## MySQL
+### MySQL
 
 - ユーザ
     - `root`
@@ -64,17 +99,17 @@ mysql -u root -p
 # mysql -u root -ppassword
 ```
 
-### phpMyAdmin
+#### phpMyAdmin
 
-ブラウザから GUI で MySQL 操作できる phpMyAdmin をサーバ配置している
-MySQL のログイン情報でアクセス可能
+ブラウザから GUI で MySQL 操作できる phpMyAdmin をサーバに配置しました。
+MySQL の初期ログイン情報でアクセス可能です。
 
 - ユーザ
     - `root`
 - パスワード
     - `password`
 
-## PHP / Apache
+### PHP / Apache
 
 ```sh
 # コンテナ名を確認
@@ -91,4 +126,5 @@ php -v
 apache2ctl -v
 ```
 
-`/var/www/html` (ドキュメントルート) にファイルを配置すると、Apache がファイル展開してくれる
+コンテナ内の `/var/www/html` (ドキュメントルート) に html や php ファイルを配置すると、
+Apache がファイルを配信してくれるので Google Chrome でアクセスできるようになります。
