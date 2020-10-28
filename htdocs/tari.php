@@ -5,7 +5,7 @@
     </head>
     <body>
         <p>
-            <?php echo "麻雀楽しい" ?>
+            <?php echo "Hello World from PHP" ?>
         </p>
     </body>
 </html>
